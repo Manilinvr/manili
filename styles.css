@@ -77,8 +77,12 @@ html[data-theme="light"] .theme-thumb{background:#111111;left:2px}
 .event.accent-3 .event-ring{color:var(--accent3)}
 /* Афиша всегда видна целиком, без обрезки (aspect-ratio реальных постеров
    не всегда совпадает с карточкой) — размытая копия того же фото на фоне
-   убирает пустые полосы по краям, а сама афиша ложится поверх без crop. */
-.event-poster{position:relative;width:100%;aspect-ratio:var(--img-ratio,4/5);overflow:hidden;background:var(--ink)}
+   убирает пустые полосы по краям, а сама афиша ложится поверх без crop.
+   Небольшой отступ сверху/по бокам + собственное (меньшее) скругление у
+   постера нужны, чтобы крупное скругление всей карточки (24px) не срезало
+   углы самой афиши — если постер стоит вплотную к краю, скругление рамки
+   неизбежно откусывает уголки рисунка (звёзды, надписи у края и т.п.). */
+.event-poster{position:relative;margin:8px 8px 0;border-radius:12px;aspect-ratio:var(--img-ratio,4/5);overflow:hidden;background:var(--ink)}
 .event-poster-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.15) blur(18px) brightness(.55);transform:scale(1.15);transition:filter .5s ease}
 .event-poster-fg{position:relative;width:100%;height:100%;object-fit:contain;display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease}
 .event:hover .event-poster-bg{filter:grayscale(0) sepia(0) blur(18px) brightness(.5)}
