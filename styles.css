@@ -63,7 +63,7 @@ html[data-theme="light"] .theme-thumb{background:#111111;left:2px}
 .car-arrow svg{width:18px;height:18px}
 .car-arrow:hover{background:var(--accent2);color:var(--ink);border-color:transparent;transform:scale(1.08)}
 .car-arrow:active{transform:scale(.94)}
-.event{position:absolute;top:50%;left:50%;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--line);border-radius:20px;overflow:hidden;width:240px;box-shadow:0 10px 26px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.22,.9,.3,1),opacity .55s,box-shadow .55s}
+.event{position:absolute;top:50%;left:50%;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--line);border-radius:24px;overflow:hidden;width:240px;box-shadow:0 10px 26px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.22,.9,.3,1),opacity .55s,box-shadow .55s}
 .event.is-active{box-shadow:0 34px 64px rgba(0,0,0,.55)}
 .event.accent-1{border-top-color:var(--accent1)}
 .event.accent-2{border-top-color:var(--accent2)}
@@ -72,8 +72,17 @@ html[data-theme="light"] .theme-thumb{background:#111111;left:2px}
 .event.accent-1 .event-ring{color:var(--accent1)}
 .event.accent-2 .event-ring{color:var(--accent2)}
 .event.accent-3 .event-ring{color:var(--accent3)}
-.event img{width:100%;aspect-ratio:var(--img-ratio,4/5);object-fit:contain;background:var(--card);display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease}
-.event:hover img{filter:grayscale(0) sepia(0)}
+/* Афиша всегда видна целиком, без обрезки (aspect-ratio реальных постеров
+   не всегда совпадает с карточкой) — размытая копия того же фото на фоне
+   убирает пустые полосы по краям, а сама афиша ложится поверх без crop. */
+.event-poster{position:relative;width:100%;aspect-ratio:var(--img-ratio,4/5);overflow:hidden;background:var(--ink)}
+.event-poster-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.15) blur(18px) brightness(.55);transform:scale(1.15);transition:filter .5s ease}
+.event-poster-fg{position:relative;width:100%;height:100%;object-fit:contain;display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease}
+.event:hover .event-poster-bg{filter:grayscale(0) sepia(0) blur(18px) brightness(.5)}
+.event:hover .event-poster-fg{filter:grayscale(0) sepia(0)}
+/* Рамка и постер масштабируются на hover как единое целое: --hover-scale
+   встроена в JS-transform карусели (app.js), поэтому не конфликтует с
+   позиционированием карточек в стеке. */
 .event:hover{box-shadow:0 30px 60px rgba(0,0,0,.45);--hover-scale:1.045}
 .event h3{transition:color .3s}
 .event.accent-1:hover h3{color:var(--accent1)}
@@ -122,23 +131,20 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding
 .footer-legal a{color:var(--muted);text-decoration:none;transition:color .3s}
 .footer-legal a:hover{color:var(--paper)}
 
-/* ---- Промо ближайшего события: афиша-флаг ---- */
-.promo{position:relative;margin:0 5vw;border-radius:26px;padding:clamp(28px,4vw,52px) 5vw clamp(32px,4vw,56px);background:var(--card);border:1px solid var(--line);text-align:center;overflow:hidden}
-.promo-eyebrow{font-size:10px;letter-spacing:3px;color:var(--accent2);font-weight:800;margin:0 0 20px}
-/* Сцена флага: высота ограничена, ширина подстраивается — афиша не растянута
-   на весь экран, но и не мелкая; качество даёт high-DPI-текстура в flag.js. */
-.flag-stage{position:relative;width:100%;max-width:520px;margin:0 auto;height:min(58vh,560px);display:flex;align-items:center;justify-content:center}
-.flag-stage .flag-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.flag-fallback{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.promo-title{font-size:clamp(30px,5.5vw,64px);line-height:.95;margin:26px 0 14px;letter-spacing:-.03em;font-weight:900}
-.promo-meta{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;color:var(--muted);font-size:12px;letter-spacing:.5px;margin:0 0 22px}
-.countdown{display:flex;gap:10px;margin:0 0 24px;flex-wrap:wrap;justify-content:center}
-.cd-unit{background:rgba(var(--bg-rgb),.5);border:1px solid var(--line);border-radius:14px;padding:12px 16px;text-align:center;min-width:62px}
+/* ---- Промо ближайшего события + countdown ---- */
+.promo{position:relative;margin:0 5vw;border-radius:26px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.promo-media{width:100%;height:min(72vh,620px);object-fit:cover;display:block;background:var(--ink)}
+.promo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,8,.1) 30%,rgba(10,9,8,.92));display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(20px,4vw,50px);--paper:#e7dfcf;--muted:#c8bfae;color:var(--paper)}
+.promo-eyebrow{font-size:10px;letter-spacing:3px;color:var(--accent2);font-weight:800;margin:0 0 10px}
+.promo h2{font-size:clamp(30px,5.5vw,64px);line-height:.95;margin:0 0 14px;letter-spacing:-.03em;font-weight:900}
+.promo-meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:12px;letter-spacing:.5px;margin:0 0 22px}
+.countdown{display:flex;gap:10px;margin:0 0 24px;flex-wrap:wrap}
+.cd-unit{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 16px;text-align:center;min-width:62px}
 .cd-unit b{display:block;font-family:'Unbounded',Inter,Arial,sans-serif;font-size:24px;line-height:1}
 .cd-unit span{font-size:9px;letter-spacing:1px;color:var(--muted)}
-.promo-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.promo-actions{display:flex;gap:12px;flex-wrap:wrap}
 .promo .btn{margin-top:0}
-.btn-share{cursor:pointer;background:var(--card);font-family:inherit}
+.btn-share{cursor:pointer;background:rgba(255,255,255,.1);color:var(--paper);border:1px solid rgba(255,255,255,.2);font-family:inherit}
 
 /* ---- Статусы билетов ---- */
 .status-pill{display:inline-block;font-size:9px;letter-spacing:1px;font-weight:800;padding:5px 10px;border-radius:999px;text-transform:uppercase}
@@ -231,7 +237,7 @@ nav a{padding:14px 10px;border-bottom:1px solid var(--line);border-radius:0;font
 .albums-grid{grid-template-columns:repeat(2,1fr)}
 .car-arrow{width:44px;height:44px}
 .promo{margin:0 4vw;border-radius:20px}
-.flag-stage{height:min(52vh,440px)}
+.promo-media{height:420px}
 .countdown{gap:8px}
 .cd-unit{min-width:52px;padding:10px 12px}
 .event-detail-body{grid-template-columns:1fr;gap:30px}
@@ -259,7 +265,7 @@ nav a{padding:14px 10px;border-bottom:1px solid var(--line);border-radius:0;font
 .events-stack.ratio-landscape{height:290px}
 .cd-unit{min-width:44px;padding:8px 9px}
 .cd-unit b{font-size:19px}
-.flag-stage{height:min(48vh,400px)}
+.promo-media{height:380px}
 .hero-badge{font-size:10px;padding:8px 14px}
 .promo-actions{width:100%}
 .promo-actions .btn{flex:1;justify-content:center;min-width:140px}

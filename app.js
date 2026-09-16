@@ -8,37 +8,27 @@ function renderPromo(ev,content){
   const el=document.querySelector('#promoSection');if(!el)return;
   if(!ev){el.style.display='none';return}
   el.style.display='block';
+  const mediaHtml=ev.promo_video_url
+    ? `<video class="promo-media" src="${ev.promo_video_url}" autoplay muted loop playsinline preload="auto" poster="${ev.poster_url||''}" onerror="this.replaceWith(document.createElement('div'))"></video>`
+    : (ev.poster_url?`<img class="promo-media" src="${ev.poster_url}" alt="${escapeHtml(ev.name)}" onerror="this.style.display='none'">`:'');
+  const cats=(ev.ticket_categories||[]).filter(t=>t.price!=null).sort((a,b)=>a.price-b.price);
   const detailUrl=`event.html?slug=${encodeURIComponent(ev.slug||ev.id)}`;
   const cfg=window.MANILI_CONFIG||{};
   const siteUrl=(cfg.SITE_URL||location.origin).replace(/\/$/,'');
   const shareUrl=`${siteUrl}/${detailUrl}`;
   const infoText=(content&&content.promo_cta_text)||'Информация';
-  const posterAlt=escapeHtml(ev.name);
-
-  el.innerHTML=`
+  el.innerHTML=`${mediaHtml}<div class="promo-overlay">
     <p class="promo-eyebrow">${escapeHtml((content&&content.promo_eyebrow)||'БЛИЖАЙШЕЕ СОБЫТИЕ')}</p>
-    <div class="flag-stage" id="flagStage" aria-label="${posterAlt}">
-      ${ev.poster_url?`<img class="flag-fallback" src="${ev.poster_url}" alt="${posterAlt}" onerror="this.style.display='none'">`:''}
-    </div>
-    <h2 class="promo-title">${escapeHtml(ev.name)}</h2>
+    <h2>${escapeHtml(ev.name)}</h2>
     <div class="promo-meta">${ev.date_text?`<span>${escapeHtml(ev.date_text)}${ev.time_text?' · '+escapeHtml(ev.time_text):''}</span>`:''}${(ev.city||ev.venue)?`<span>${escapeHtml([ev.city,ev.venue].filter(Boolean).join(', '))}</span>`:''}</div>
     <div class="countdown" id="promoCountdown"></div>
     <div class="promo-actions">
       <a class="btn" href="${detailUrl}" data-track="button_click" data-track-event-id="${ev.id}" data-track-label="Информация о событии">${escapeHtml(infoText)} <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>
       <button class="btn btn-share" id="promoShare" type="button" data-track="share_click" data-track-event-id="${ev.id}" data-track-label="Поделиться событием">Поделиться</button>
-    </div>`;
-
+    </div>
+  </div>`;
   if(ev.starts_at)startCountdown(document.querySelector('#promoCountdown'),ev.starts_at,content);
 
-  // Флаг: пытаемся запустить анимацию ткани; при любой проблеме остаётся статичная афиша.
-  const stage=document.querySelector('#flagStage');
-  if(stage&&ev.poster_url&&window.manili_initFlag){
-    window.manili_initFlag({container:stage,posterUrl:ev.poster_url,alt:ev.name})
-      .then(()=>{const fb=stage.querySelector('.flag-fallback');if(fb)fb.style.display='none'})
-      .catch(()=>{/* статичная афиша уже показана как fallback */});
-  }
-
-  // Поделиться: нативный share на телефоне, иначе — копирование ссылки.
   const shareBtn=document.querySelector('#promoShare');
   if(shareBtn){
     shareBtn.addEventListener('click',()=>{
@@ -176,7 +166,7 @@ function renderAlbums(albums,content){
         if(!isPast&&e.is_free){ticketBtn=`<a class="btn ticket-btn" href="${detailUrl}">Подробнее <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>`}
         else if(!isPast&&cats.length){ticketBtn=`<a class="btn ticket-btn" href="${detailUrl}">${escapeHtml(ticketLabel)} от ${cats[0].price}${escapeHtml(cats[0].currency||'₽')} <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>`}
         else if(!isPast&&e.ticket_url&&/^https?:\/\//i.test(e.ticket_url)){ticketBtn=`<a class="btn ticket-btn" target="_blank" rel="noopener" href="${e.ticket_url}" data-track="ticket_click" data-track-event-id="${e.id}" data-track-label="${escapeHtml(e.name)}">${escapeHtml(ticketLabel)} <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>`}
-        return `<article class="${cls.join(' ')}">${tag}<div class="event-ring">${RING_SVG}</div><a href="${detailUrl}" data-track="poster_click" data-track-event-id="${e.id}" data-track-label="${escapeHtml(e.name)}">${e.poster_url?`<img src="${e.poster_url}" alt="${escapeHtml(e.name)}" loading="lazy" onerror="this.style.display='none'">`:''}<div class="event-body">${statusPill}<div class="event-date">${escapeHtml(e.date_text||'')}${e.time_text?' / '+escapeHtml(e.time_text):''}</div><h3>${escapeHtml(e.name)}</h3>${e.venue?`<p>${escapeHtml(e.venue)}</p>`:''}</div></a>${ticketBtn?`<div style="padding:0 16px 16px">${ticketBtn}</div>`:''}</article>`;
+        return `<article class="${cls.join(' ')}">${tag}<div class="event-ring">${RING_SVG}</div><a href="${detailUrl}" data-track="poster_click" data-track-event-id="${e.id}" data-track-label="${escapeHtml(e.name)}">${e.poster_url?`<div class="event-poster"><img class="event-poster-bg" src="${e.poster_url}" alt="" aria-hidden="true" loading="lazy"><img class="event-poster-fg" src="${e.poster_url}" alt="${escapeHtml(e.name)}" loading="lazy" onerror="this.closest('.event-poster').style.display='none'"></div>`:''}<div class="event-body">${statusPill}<div class="event-date">${escapeHtml(e.date_text||'')}${e.time_text?' / '+escapeHtml(e.time_text):''}</div><h3>${escapeHtml(e.name)}</h3>${e.venue?`<p>${escapeHtml(e.venue)}</p>`:''}</div></a>${ticketBtn?`<div style="padding:0 16px 16px">${ticketBtn}</div>`:''}</article>`;
       }).join('');
       eventsGrid.querySelectorAll('[data-analytics="ticket_click"]').forEach(a=>{
         a.addEventListener('click',()=>{window.manili_track?.('ticket_click',{event:a.dataset.event})});
