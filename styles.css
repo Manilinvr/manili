@@ -55,45 +55,48 @@ html[data-theme="light"] .theme-thumb{background:#111111;left:2px}
 .section-head h2,.contact h2{font-size:clamp(44px,8vw,110px);line-height:.85;letter-spacing:-.04em;margin:35px 0 70px;font-weight:900}
 
 .carousel-wrap{display:flex;align-items:center;gap:14px;min-width:0}
-.events-stack{position:relative;flex:1;height:480px;--img-ratio:4/5;overflow:hidden;min-width:0}
-.events-stack.ratio-square{height:430px;--img-ratio:1/1}
-.events-stack.ratio-landscape{height:400px;--img-ratio:16/9}
+.events-stack{position:relative;flex:1;height:580px;overflow:hidden;min-width:0}
 .events-stack .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .car-arrow{flex:0 0 auto;width:46px;height:46px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--paper);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s,transform .3s,border-color .3s;z-index:20}
 .car-arrow svg{width:18px;height:18px}
 .car-arrow:hover{background:var(--accent2);color:var(--ink);border-color:transparent;transform:scale(1.08)}
 .car-arrow:active{transform:scale(.94)}
-.event{position:absolute;top:50%;left:50%;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--line);border-radius:24px;overflow:hidden;width:240px;box-shadow:0 10px 26px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.22,.9,.3,1),opacity .55s,box-shadow .55s}
+.event{position:absolute;top:50%;left:50%;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;width:200px;box-shadow:0 10px 26px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.22,.9,.3,1),opacity .55s,box-shadow .55s}
+/* Вся карточка — одна ссылка <a>; без сброса заголовок и адрес наследуют
+   стандартный синий цвет и подчёркивание браузерных ссылок. */
+.event a{color:inherit;text-decoration:none;display:block}
 .event.is-active{box-shadow:0 34px 64px rgba(0,0,0,.55)}
-.event.accent-1{border-top-color:var(--accent1)}
-.event.accent-2{border-top-color:var(--accent2)}
-.event.accent-3{border-top-color:var(--accent3)}
-.event-ring{position:absolute;top:14px;right:14px;width:36px;height:36px;opacity:.35;animation:mlSpin 20s linear infinite;color:var(--line)}
-.event.accent-1 .event-ring{color:var(--accent1)}
-.event.accent-2 .event-ring{color:var(--accent2)}
-.event.accent-3 .event-ring{color:var(--accent3)}
-/* Афиша всегда видна целиком, без обрезки (aspect-ratio реальных постеров
-   не всегда совпадает с карточкой) — размытая копия того же фото на фоне
-   убирает пустые полосы по краям, а сама афиша ложится поверх без crop. */
-.event-poster{position:relative;width:100%;aspect-ratio:var(--img-ratio,4/5);overflow:hidden;background:var(--ink)}
-.event-poster-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.15) blur(18px) brightness(.55);transform:scale(1.15);transition:filter .5s ease}
-.event-poster-fg{position:relative;width:100%;height:100%;object-fit:contain;display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
-.event:hover .event-poster-bg{filter:grayscale(0) sepia(0) blur(18px) brightness(.5)}
-.event:hover .event-poster-fg{filter:grayscale(0) sepia(0);transform:scale(1.04)}
-.event:hover{box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.event-ring{position:absolute;top:18px;right:18px;width:32px;height:32px;opacity:.5;animation:mlSpin 20s linear infinite;color:#fff;z-index:2}
+/* Единый формат афиши — капсула 9:16 (как в брендбуке): фото всегда
+   заливает форму без искажений и без выхода за края (object-fit:cover
+   внутри overflow:hidden), поэтому афиша не "плывёт" при разных
+   исходных пропорциях загруженного фото. Небольшой отступ (10px) от
+   краёв карточки — чтобы собственное скругление капсулы не зависело
+   от скругления внешней рамки (иначе форма обрежет фото непредсказуемо). */
+.event-poster{position:relative;margin:10px 10px 0;border-radius:9999px;aspect-ratio:9/16;overflow:hidden;background:var(--ink)}
+.event-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease}
+.event:hover .event-poster img{filter:grayscale(0) sepia(0)}
+/* Рамка и постер масштабируются на hover как единое целое: --hover-scale
+   встроена в JS-transform карусели (app.js), поэтому не конфликтует с
+   позиционированием карточек в стеке. */
+.event:hover{box-shadow:0 30px 60px rgba(0,0,0,.45);--hover-scale:1.045}
 .event h3{transition:color .3s}
 .event.accent-1:hover h3{color:var(--accent1)}
 .event.accent-2:hover h3{color:var(--accent2)}
 .event.accent-3:hover h3{color:var(--accent3)}
 .event-body{padding:16px}
 .event-date{font-size:10px;color:var(--muted);letter-spacing:1.5px;font-weight:700}
-.event h3{font-size:19px;margin:9px 0;font-weight:800;letter-spacing:-.02em}
-.event p{color:var(--muted);line-height:1.5;font-size:12px}
-.event-tag{position:absolute;top:12px;left:12px;font-size:9px;letter-spacing:1.5px;font-weight:800;padding:6px 10px;border-radius:999px;z-index:2}
+/* Название и адрес обрезаются многоточием после 2/1 строк — длина текста
+   в афише не фиксирована (её вводят в админке), а высота карусели
+   фиксирована, чтобы карточки не наезжали друг на друга и не вылезали
+   за пределы стека при длинных названиях/адресах. */
+.event h3{font-size:18px;margin:8px 0;font-weight:800;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.event p{color:var(--muted);line-height:1.4;font-size:12px;margin:0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.event-tag{position:absolute;top:18px;left:18px;font-size:9px;letter-spacing:1.5px;font-weight:800;padding:6px 10px;border-radius:999px;z-index:2}
 .event-tag.next{background:var(--accent2);color:var(--ink)}
 .event-tag.past{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
 .event.is-past{filter:grayscale(.4)}
-.event.is-past img{filter:grayscale(1) brightness(.6)}
+.event.is-past .event-poster img{filter:grayscale(1) brightness(.6)}
 .ticket-btn{margin-top:12px;background:var(--line);color:var(--paper);border-color:transparent;padding:12px 18px;font-size:11px}
 .event.accent-1 .ticket-btn{background:var(--accent1);color:var(--ink)}
 .event.accent-2 .ticket-btn{background:var(--accent2);color:var(--ink)}
@@ -226,10 +229,8 @@ nav a{padding:14px 10px;border-bottom:1px solid var(--line);border-radius:0;font
 .manifest{grid-template-columns:1fr}
 .hero h1{margin-top:50px}
 .carousel-wrap{gap:8px}
-.event{width:160px}
-.events-stack{height:380px}
-.events-stack.ratio-square{height:340px}
-.events-stack.ratio-landscape{height:310px}
+.event{width:170px}
+.events-stack{height:500px}
 .gallery-grid{grid-template-columns:repeat(2,1fr)}
 .albums-grid{grid-template-columns:repeat(2,1fr)}
 .car-arrow{width:44px;height:44px}
@@ -256,10 +257,8 @@ nav a{padding:14px 10px;border-bottom:1px solid var(--line);border-radius:0;font
 .theme-label{display:none}
 }
 @media(max-width:360px){
-.event{width:148px}
-.events-stack{height:360px}
-.events-stack.ratio-square{height:320px}
-.events-stack.ratio-landscape{height:290px}
+.event{width:150px}
+.events-stack{height:485px}
 .cd-unit{min-width:44px;padding:8px 9px}
 .cd-unit b{font-size:19px}
 .promo-media{height:380px}
