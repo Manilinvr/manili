@@ -192,7 +192,7 @@ function renderAlbums(albums,content){
           if(abs>2){el.style.opacity='0';el.style.pointerEvents='none';el.style.transform=`translate(-50%,-50%) translateX(${o*70}%) scale(.55)`;return}
           el.style.opacity=abs===0?'1':abs===1?'.7':'.35';
           el.style.pointerEvents=abs===0?'auto':'none';
-          el.style.transform=`translate(-50%,-50%) translateX(${o*64}%) scale(${1-abs*0.15}) rotate(${o*6}deg)`;
+          el.style.transform=`translate(-50%,-50%) translateX(${o*64}%) scale(${1-abs*0.15}) rotate(${o*6}deg) scale(var(--hover-scale,1))`;
         });
       };
       updateStack();

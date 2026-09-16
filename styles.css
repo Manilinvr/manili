@@ -72,9 +72,9 @@ html[data-theme="light"] .theme-thumb{background:#111111;left:2px}
 .event.accent-1 .event-ring{color:var(--accent1)}
 .event.accent-2 .event-ring{color:var(--accent2)}
 .event.accent-3 .event-ring{color:var(--accent3)}
-.event img{width:100%;aspect-ratio:var(--img-ratio,4/5);object-fit:cover;display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
-.event:hover img{filter:grayscale(0) sepia(0);transform:scale(1.06)}
-.event:hover{box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.event img{width:100%;aspect-ratio:var(--img-ratio,4/5);object-fit:contain;background:var(--card);display:block;filter:grayscale(1) sepia(.15);transition:filter .5s ease}
+.event:hover img{filter:grayscale(0) sepia(0)}
+.event:hover{box-shadow:0 30px 60px rgba(0,0,0,.45);--hover-scale:1.045}
 .event h3{transition:color .3s}
 .event.accent-1:hover h3{color:var(--accent1)}
 .event.accent-2:hover h3{color:var(--accent2)}
