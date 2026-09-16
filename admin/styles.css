@@ -93,6 +93,7 @@ header h1{margin:6px 0 0;font-size:38px;letter-spacing:-.03em}
 .content-grid .full{grid-column:1/-1}
 .content-grid .card h3{margin:0 0 4px;font-size:16px;font-family:'Unbounded',Inter,Arial,sans-serif}
 .content-grid .card p.hint{color:var(--muted);font-size:11px;margin:0 0 14px;line-height:1.6}
+.hint{color:var(--muted);font-size:11px;line-height:1.6}
 
 /* ---- Соцсети ---- */
 .social-row{display:grid;grid-template-columns:150px 1fr 1fr 90px auto auto;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
