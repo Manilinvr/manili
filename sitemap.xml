@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Это запасной статический sitemap (только главная страница) — на случай, если сайт
+     развёрнут не на Netlify и netlify/functions/sitemap.js не может быть выполнен.
+     На Netlify этот файл переопределяется редиректом в netlify.toml на динамическую
+     функцию, которая добавляет сюда ещё и реальные опубликованные события/альбомы. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://manili-event.ru/</loc></url>
+</urlset>

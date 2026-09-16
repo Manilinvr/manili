@@ -1,0 +1,24 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#11100e"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><title>МаниЛи / Admin</title><link rel="stylesheet" href="styles.css"></head><body><div id="login" class="login"><div class="login-box"><div class="brand">МаниЛи <small>ADMIN</small></div><h1>Вход</h1><p>Управляй событиями, афишами и сайтом.</p><form id="loginForm"><input id="email" type="email" placeholder="Email" required><input id="password" type="password" placeholder="Пароль" required><button>Войти</button><div id="loginError" class="error"></div></form></div></div>
+<div id="app" class="app hidden"><aside><div class="brand">МаниЛи <small>ADMIN</small></div><button class="nav active" data-page="dashboard"><i class="nicon">⌂</i> <span>Дашборд</span></button><button class="nav" data-page="events"><i class="nicon">◼</i> <span>События</span></button><button class="nav" data-page="posters"><i class="nicon">▧</i> <span>Афиши</span></button><button class="nav" data-page="albums"><i class="nicon">🎞</i> <span>Альбомы</span></button><button class="nav" data-page="content"><i class="nicon">✎</i> <span>Контент сайта</span></button><button class="nav" data-page="socials"><i class="nicon">⚯</i> <span>Соцсети</span></button><button class="nav" data-page="analytics"><i class="nicon">📈</i> <span>Аналитика</span></button><button class="nav" data-page="settings"><i class="nicon">⚙</i> <span>Настройки</span></button><div class="side-bottom"><a href="../" target="_blank"><span class="side-bottom-label">Открыть сайт</span> <i class="nicon">↗</i></a><button id="logout">Выйти</button></div></aside><main><header><div><div class="eyebrow">MANILI EVENT</div><h1 id="pageTitle">Дашборд</h1></div><button id="quickAdd" class="primary">+ Новое событие</button></header><section id="page"></section></main></div>
+
+<div id="modal" class="modal hidden"><div class="modal-card"><div class="modal-head"><h2 id="modalTitle">Событие</h2><button id="closeModal">×</button></div>
+<form id="eventForm">
+  <input type="hidden" id="eventId">
+  <label>Название<input id="fName" required></label>
+  <label>Ссылка (слаг) для страницы события<input id="fSlug" placeholder="oformitsya-avtomaticheski-esli-pusto"></label>
+  <div class="two"><label>Дата (текстом, для карточек)<input id="fDate" required placeholder="30.09.26"></label><label>Время (текстом)<input id="fTime" placeholder="20:00 — LATE"></label></div>
+  <label>Точные дата и время (для обратного отсчёта)<input id="fStartsAt" type="datetime-local"></label>
+  <div class="two"><label>Город<input id="fCity" placeholder="Москва"></label><label>Место<input id="fVenue" placeholder="PLAN B"></label></div>
+  <div class="two"><label>Статус публикации<select id="fStatus"><option value="draft">Черновик</option><option value="published">Опубликовано</option><option value="archived">Архив (прошедшее)</option></select></label><label>Статус билетов<select id="fTicketStatus"><option value="coming_soon">Скоро</option><option value="on_sale">В продаже</option><option value="almost_sold_out">Почти распроданы</option><option value="sold_out">Распроданы</option><option value="sales_closed">Продажи закрыты</option></select></label></div>
+  <label class="check"><input type="checkbox" id="fFree"> Вход свободный (бесплатно) — скрывает билеты и статус на сайте</label>
+  <label>Описание<textarea id="fDesc" rows="4"></textarea></label>
+  <label>Ссылка на билеты (если категорий нет)<input id="fTicket" type="url"></label>
+  <label>Афиша<input id="fPoster" type="file" accept="image/*"></label><div id="posterPreview"></div>
+  <label>Промо-видео<input id="fPromoVideo" type="file" accept="video/*"></label><div id="promoPreview"></div>
+  <label class="check"><input type="checkbox" id="fPromoPublished"> показывать промо на главной</label>
+  <button class="primary" type="submit">Сохранить</button><div id="formError" class="error"></div>
+</form>
+<div id="ticketCatsBlock"></div>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script><script src="../icons.js"></script><script src="app.js"></script></body></html>

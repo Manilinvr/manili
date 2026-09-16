@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#11100e;--paper:#e7dfcf;--muted:#9d9588;--line:#3b3833;--card:#1a1815;
+  --accent1:#ff6a4d;--accent2:#8b7bff;--accent3:#3ecf8e;--ink:#141210;--danger:#ff8a75;
+  /* легаси-имена, которые использует остальной CSS ниже */
+  --panel:var(--card);--panel2:#211f1b;
+}
+*{box-sizing:border-box}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+body{margin:0;background:var(--bg);color:var(--paper);font:14px Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand,header h1,.stat b{font-family:'Unbounded',Inter,Arial,sans-serif}
+.hidden{display:none!important}
+
+/* ---- Вход ---- */
+.login{min-height:100vh;display:grid;place-items:center;padding:25px;position:relative;overflow:hidden}
+.login::before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,rgba(139,123,255,.22),transparent 60%),radial-gradient(circle at 65% 70%,rgba(62,207,142,.16),transparent 55%);
+  filter:blur(10px);top:-140px;right:-140px;pointer-events:none}
+.login-box{width:min(440px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:42px;position:relative;z-index:1;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.brand{font-weight:900;font-size:26px;letter-spacing:-1px;display:flex;align-items:center;gap:10px}
+.brand::before{content:'';display:inline-block;width:34px;height:34px;border-radius:50%;flex:0 0 auto;
+  background:radial-gradient(circle at 33% 28%,rgba(255,255,255,.4),transparent 42%),linear-gradient(155deg,var(--accent3),var(--card) 70%);
+  box-shadow:inset -6px -6px 14px rgba(0,0,0,.55),inset 4px 4px 10px rgba(255,255,255,.12)}
+.brand small{font-size:9px;letter-spacing:3px;color:var(--muted);margin-left:2px;font-family:Inter,Arial,sans-serif;font-weight:700}
+.login h1{font-size:38px;margin:56px 0 8px;letter-spacing:-.03em;line-height:1}
+.login p{color:var(--muted);margin-bottom:26px}
+.login input,.modal input,.modal textarea,.modal select,.content-grid input,.content-grid textarea,.content-grid select{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:12px;color:var(--paper);padding:13px 14px;margin:6px 0 14px;font:inherit;outline:none;transition:border-color .2s}
+.login input:focus,.modal input:focus,.modal textarea:focus,.modal select:focus,.content-grid input:focus,.content-grid textarea:focus,.content-grid select:focus{border-color:var(--accent2)}
+.content-grid textarea{resize:vertical;line-height:1.6;min-height:100px}
+.button,button{font:inherit}
+.login button,.primary{background:var(--paper);color:var(--ink);border:0;border-radius:999px;padding:14px 22px;font-weight:800;cursor:pointer;letter-spacing:.2px}
+.error{color:var(--danger);margin-top:12px;min-height:18px;font-size:12px}
+
+/* ---- Каркас приложения ---- */
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.app aside{border-right:1px solid var(--line);padding:28px 18px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+.nav{border:0;background:transparent;color:var(--muted);text-align:left;padding:13px 14px;cursor:pointer;border-radius:999px;font-weight:600;transition:background .25s,color .25s}
+.nav.active,.nav:hover{background:var(--panel2);color:var(--paper)}
+.nav.active{color:var(--paper);box-shadow:inset 3px 0 0 var(--accent3)}
+.nav span{margin-left:10px}
+.nicon{display:inline-block;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.nav:hover .nicon{transform:scale(1.25) rotate(-8deg)}
+.nav.active .nicon{transform:scale(1.12);color:var(--accent3)}
+.side-bottom{margin-top:auto;display:grid;gap:4px}
+.side-bottom a,.side-bottom button{color:var(--muted);background:none;border:0;text-decoration:none;padding:12px 14px;text-align:left;cursor:pointer;border-radius:999px;font-weight:600}
+.side-bottom a:hover,.side-bottom button:hover{background:var(--panel2);color:var(--paper)}
+.side-bottom a .nicon{margin-left:4px}
+.side-bottom a:hover .nicon{transform:translate(2px,-2px)}
+.primary,#closeModal,.actions button{transition:transform .2s,background .2s,border-color .2s}
+.primary:hover{transform:translateY(-2px)}
+.actions button:hover{transform:scale(1.05);border-color:var(--accent2)}
+#closeModal:hover{transform:rotate(90deg)}
+
+.app main{padding:35px 4vw;min-width:0}
+header{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:28px}
+header h1{margin:6px 0 0;font-size:38px;letter-spacing:-.03em}
+.eyebrow{font-size:9px;color:var(--muted);letter-spacing:3px;font-weight:800;text-transform:uppercase}
+
+/* ---- Плитки / карточки ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.stat{position:relative;overflow:hidden}
+.stat:nth-child(6n+1) b{color:var(--accent3)}
+.stat:nth-child(6n+2) b{color:var(--accent1)}
+.stat:nth-child(6n+3) b{color:var(--accent2)}
+.stat:nth-child(6n+4) b{color:var(--accent3)}
+.stat:nth-child(6n+5) b{color:var(--accent1)}
+.stat:nth-child(6n) b{color:var(--accent2)}
+.stat b{display:block;font-size:36px;margin-top:8px;font-family:'Unbounded',Inter,Arial,sans-serif}
+
+/* ---- Таблица ---- */
+.table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.table th,.table td{padding:15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.table th{font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.thumb{width:50px;height:64px;object-fit:cover;background:var(--ink);border-radius:8px}
+.pill{display:inline-block;padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.pill.free{border-color:var(--accent3);color:var(--accent3)}
+.actions{display:flex;gap:6px}
+.actions button{background:none;color:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600}
+.actions .delete{color:var(--danger);border-color:var(--danger)}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+
+/* ---- Афиши ---- */
+.poster-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.poster-card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .25s,border-color .25s}
+.poster-card:hover{transform:translateY(-3px);border-color:var(--accent2)}
+.poster-card img,.poster-card video{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:var(--ink);filter:grayscale(.5)}
+.poster-card .pbody{padding:14px}
+
+/* ---- Контент-редактор ---- */
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.content-grid .full{grid-column:1/-1}
+.content-grid .card h3{margin:0 0 4px;font-size:16px;font-family:'Unbounded',Inter,Arial,sans-serif}
+.content-grid .card p.hint{color:var(--muted);font-size:11px;margin:0 0 14px;line-height:1.6}
+
+/* ---- Соцсети ---- */
+.social-row{display:grid;grid-template-columns:150px 1fr 1fr 90px auto auto;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.social-row select,.social-row input{margin:0}
+.social-row .icon-preview{width:20px;height:20px;color:var(--accent3)}
+.social-row label.check{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11px;font-weight:400}
+label.check{display:flex!important;align-items:center;gap:8px;color:var(--paper)!important;font-size:13px!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:6px 0 14px;cursor:pointer}
+label.check input{width:auto;margin:0;accent-color:var(--accent3)}
+@media(max-width:900px){.social-row{grid-template-columns:1fr 1fr}}
+
+/* ---- Модалка ---- */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:grid;place-items:center;padding:20px;z-index:100;backdrop-filter:blur(3px)}
+.modal-card{background:var(--card);border:1px solid var(--line);border-radius:22px;width:min(720px,100%);max-height:92vh;max-height:92dvh;overflow:auto;-webkit-overflow-scrolling:touch;padding:26px}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.modal-head h2{font-size:22px}
+.modal-head button{background:none;border:0;color:var(--paper);font-size:28px;cursor:pointer;line-height:1}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:1px}
+
+/* ---- Панель инструментов / поиск ---- */
+.toolbar{display:flex;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.toolbar input{background:var(--card);border:1px solid var(--line);border-radius:999px;color:var(--paper);padding:12px 18px;width:100%;max-width:300px}
+
+/* ---- Аналитика ---- */
+.pill-btn{background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.pill-btn:hover{color:var(--paper);border-color:var(--accent2)}
+.pill-btn.is-active{background:var(--accent3);color:var(--ink);border-color:transparent}
+.device-row{display:flex;align-items:center;gap:12px;margin:10px 0}
+.device-label{width:70px;font-size:12px;color:var(--muted);flex:0 0 auto}
+.device-bar{flex:1;height:10px;border-radius:999px;background:var(--panel2);overflow:hidden;min-width:0}
+.device-bar div{height:100%;border-radius:999px;transition:width .4s ease}
+.device-pct{width:44px;text-align:right;font-size:12px;color:var(--paper);flex:0 0 auto}
+
+/* ---- Адаптив ---- */
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  /* Сайдбар становится нижней панелью навигации (как в мобильных приложениях),
+     а не просто сжатой десктопной версией — так удобнее нажимать пальцем
+     и не тратится вертикальное место под контент. */
+  .app aside{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;
+    flex-direction:row;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    border-right:0;border-top:1px solid var(--line);
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom));gap:2px;z-index:50;background:var(--bg)}
+  .app aside .brand{display:none}
+  .nav{flex-direction:column;gap:3px;padding:8px 12px;border-radius:12px;min-width:66px;flex:0 0 auto;font-size:9px;white-space:nowrap;text-align:center}
+  .nav .nicon{font-size:18px}
+  .nav.active{box-shadow:none;background:var(--panel2)}
+  .side-bottom{position:fixed;top:12px;right:14px;left:auto;bottom:auto;flex-direction:row;gap:8px;margin:0;z-index:51}
+  .side-bottom a,.side-bottom button{padding:9px 12px;font-size:12px;border:1px solid var(--line);border-radius:10px;background:var(--card);white-space:nowrap}
+  .side-bottom-label{display:none}
+  .app main{padding:24px 4vw 100px}
+  header{padding-right:90px}
+  header h1{font-size:26px}
+  .stats{grid-template-columns:1fr 1fr}
+  .poster-grid{grid-template-columns:1fr 1fr}
+  .content-grid{grid-template-columns:1fr}
+  .content-grid .full{grid-column:auto}
+}
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr}
+  .poster-grid{grid-template-columns:1fr 1fr}
+  header{align-items:start;gap:10px}
+  .table{font-size:12px}
+  .table th:nth-child(3),.table td:nth-child(3){display:none}
+  .two{grid-template-columns:1fr}
+  .modal{padding:0}
+  .modal-card{border-radius:18px 18px 0 0;max-height:94dvh;padding:20px 18px calc(20px + env(safe-area-inset-bottom));align-self:end;width:100%}
+}
+/* Таблицы шире экрана скроллятся сами, не раздвигая всю страницу */
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+

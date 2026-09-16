@@ -1,0 +1,42 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Альбом — МаниЛи EVENT</title>
+<meta name="description" content="Фото и видео с событий МаниЛи EVENT.">
+<link rel="canonical" href="https://manili-event.ru/album.html">
+<meta name="theme-color" content="#11100e">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="МаниЛи EVENT">
+<meta property="og:title" content="Альбом — МаниЛи EVENT">
+<meta property="og:description" content="Фото и видео с событий МаниЛи EVENT.">
+<meta property="og:image" content="https://manili-event.ru/apple-touch-icon.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="styles.css"></head><body>
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}})();</script>
+<header class="site-header"><a class="logo" href="index.html">МаниЛи<span>EVENT</span></a><nav id="siteNav"><a href="index.html#events">События</a><a href="index.html#about">О нас</a><a href="index.html#gallery">Фото</a><a href="index.html#contacts">Контакты</a></nav><button class="nav-toggle" id="navToggle" type="button" aria-label="Меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button><button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить тему"><span class="theme-track"><span class="theme-thumb"></span></span><span class="theme-label">Theme: Dark</span></button><a class="ml" href="index.html#events" id="mlBadge"><span>МЛ</span></a></header>
+<main id="top">
+<a class="back-link" href="index.html#gallery"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Все альбомы</a>
+<div id="albumContent"><div class="section" style="text-align:center"><p class="loading">Загружаем альбом…</p></div></div>
+</main>
+<footer><span id="footerLeft">МАНИЛИ EVENT</span><span class="footer-legal"><a href="privacy.html">Конфиденциальность</a> · <a href="terms.html">Условия</a></span><span id="footerRight">МУЗЫКА. ЛЮДИ. СОБЫТИЯ.</span></footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <button class="car-arrow car-prev" id="lightboxPrev" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="lightbox-frame">
+    <div class="lightbox-stage" id="lightboxStage"></div>
+  <div class="lightbox-actions">
+    <button class="lb-btn" id="lightboxDownload" aria-label="Скачать" data-track="download_click"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4.5 18.5v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="lb-btn" id="lightboxShare" aria-label="Поделиться" data-track="share_click" data-track-label="menu_open"><svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="2.6" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="2.6" stroke="currentColor" stroke-width="1.8"/><path d="m8.3 10.7 7.4-4.2M8.3 13.3l7.4 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="share-menu" id="shareMenu">
+    <a href="#" id="shareTelegram" target="_blank" rel="noopener" data-track="share_click" data-track-label="Telegram">Telegram</a>
+    <a href="#" id="shareWhatsapp" target="_blank" rel="noopener" data-track="share_click" data-track-label="WhatsApp">WhatsApp</a>
+    <a href="#" id="shareVk" target="_blank" rel="noopener" data-track="share_click" data-track-label="VK">ВКонтакте</a>
+    <a href="#" id="shareCopy" data-track="share_click" data-track-label="copy_link">Скопировать ссылку</a>
+  </div>
+  </div>
+  <button class="car-arrow car-next" id="lightboxNext" aria-label="Вперёд"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="analytics.js"></script><script src="icons.js"></script><script src="theme.js"></script><script src="nav.js"></script><script src="theme-bg.js"></script><script src="lightbox.js"></script><script src="album.js"></script></body></html>
