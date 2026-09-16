@@ -137,9 +137,6 @@ function renderAlbums(albums,content){
     const ticketLabel=(content&&content.ticket_button_text)||'Билеты';
     const nextLabel=(content&&content.events_next_label)||'БЛИЖАЙШЕЕ';
     const pastLabel=(content&&content.events_past_label)||'ПРОШЛО';
-    const ratio=(content&&content.poster_aspect_ratio)||'portrait';
-    eventsGrid.classList.toggle('ratio-square',ratio==='square');
-    eventsGrid.classList.toggle('ratio-landscape',ratio==='landscape');
 
     let events=null,eventsErr=null;
     try{
@@ -166,7 +163,7 @@ function renderAlbums(albums,content){
         if(!isPast&&e.is_free){ticketBtn=`<a class="btn ticket-btn" href="${detailUrl}">Подробнее <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>`}
         else if(!isPast&&cats.length){ticketBtn=`<a class="btn ticket-btn" href="${detailUrl}">${escapeHtml(ticketLabel)} от ${cats[0].price}${escapeHtml(cats[0].currency||'₽')} <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>`}
         else if(!isPast&&e.ticket_url&&/^https?:\/\//i.test(e.ticket_url)){ticketBtn=`<a class="btn ticket-btn" target="_blank" rel="noopener" href="${e.ticket_url}" data-track="ticket_click" data-track-event-id="${e.id}" data-track-label="${escapeHtml(e.name)}">${escapeHtml(ticketLabel)} <span class="icon icon-arrow-up-right">${window.manili_icon?window.manili_icon('arrow-up-right'):''}</span></a>`}
-        return `<article class="${cls.join(' ')}">${tag}<div class="event-ring">${RING_SVG}</div><a href="${detailUrl}" data-track="poster_click" data-track-event-id="${e.id}" data-track-label="${escapeHtml(e.name)}">${e.poster_url?`<div class="event-poster"><img class="event-poster-bg" src="${e.poster_url}" alt="" aria-hidden="true" loading="lazy"><img class="event-poster-fg" src="${e.poster_url}" alt="${escapeHtml(e.name)}" loading="lazy" onerror="this.closest('.event-poster').style.display='none'"></div>`:''}<div class="event-body">${statusPill}<div class="event-date">${escapeHtml(e.date_text||'')}${e.time_text?' / '+escapeHtml(e.time_text):''}</div><h3>${escapeHtml(e.name)}</h3>${e.venue?`<p>${escapeHtml(e.venue)}</p>`:''}</div></a>${ticketBtn?`<div style="padding:0 16px 16px">${ticketBtn}</div>`:''}</article>`;
+        return `<article class="${cls.join(' ')}">${tag}<div class="event-ring">${RING_SVG}</div><a href="${detailUrl}" data-track="poster_click" data-track-event-id="${e.id}" data-track-label="${escapeHtml(e.name)}"><div class="event-poster">${e.poster_url?`<img src="${e.poster_url}" alt="${escapeHtml(e.name)}" loading="lazy" onerror="this.closest('.event-poster').style.display='none'">`:''}</div><div class="event-body">${statusPill}<div class="event-date">${escapeHtml(e.date_text||'')}${e.time_text?' / '+escapeHtml(e.time_text):''}</div><h3>${escapeHtml(e.name)}</h3>${e.venue?`<p>${escapeHtml(e.venue)}</p>`:''}</div></a>${ticketBtn?`<div style="padding:0 16px 16px">${ticketBtn}</div>`:''}</article>`;
       }).join('');
       eventsGrid.querySelectorAll('[data-analytics="ticket_click"]').forEach(a=>{
         a.addEventListener('click',()=>{window.manili_track?.('ticket_click',{event:a.dataset.event})});

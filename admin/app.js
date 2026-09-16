@@ -159,11 +159,7 @@ async function renderContent(){
     <label>Текст загрузки<input id="cEventsLoading" value="${v('events_loading_text')}"></label>
     <label>Текст «событий пока нет»<input id="cEventsEmpty" value="${v('events_empty_text')}"></label>
     <label>Текст ошибки загрузки<input id="cEventsError" value="${v('events_error_text')}"></label>
-    <label>Формат афиш<select id="cPosterRatio">
-      <option value="portrait" ${(!c?.poster_aspect_ratio||c.poster_aspect_ratio==='portrait')?'selected':''}>Портрет (вертикальный)</option>
-      <option value="square" ${c?.poster_aspect_ratio==='square'?'selected':''}>Квадрат</option>
-      <option value="landscape" ${c?.poster_aspect_ratio==='landscape'?'selected':''}>Альбомный (горизонтальный)</option>
-    </select></label>
+    <p class="hint">Формат афиш в карусели единый — вертикальная капсула 9:16. Загружай постеры этого формата на странице события, чтобы фото заливало карточку без обрезки и искажений.</p>
   </div>
   <div class="card"><h3>Раздел «Галерея»</h3><p class="hint">Сами фото загружаются в разделе «Галерея» слева.</p>
     <label>Пункт меню<input id="cNavGallery" value="${v('nav_gallery_label')}"></label>
@@ -201,7 +197,6 @@ async function renderContent(){
       events_eyebrow:$('#cEventsEyebrow').value,events_title:$('#cEventsTitle').value,events_next_label:$('#cEventsNext').value,events_past_label:$('#cEventsPast').value,ticket_button_text:$('#cTicketBtn').value,events_loading_text:$('#cEventsLoading').value,events_empty_text:$('#cEventsEmpty').value,events_error_text:$('#cEventsError').value,
       nav_gallery_label:$('#cNavGallery').value,
       about_eyebrow:$('#cAboutEyebrow').value,about_title:$('#cAboutTitle').value,about_text:$('#cAboutText').value,manifest_line:$('#cManifestLine').value,
-      poster_aspect_ratio:$('#cPosterRatio').value,
       contact_eyebrow:$('#cContactEyebrow').value,contact_title:$('#cContactTitle').value,contact_email:$('#cEmail').value,
       footer_left:$('#cFooterLeft').value,footer_right:$('#cFooterRight').value,
       bg_color_dark:$('#cBgColor_dark').value,bg_overlay_opacity_dark:parseFloat($('#cBgOverlay_dark').value)||0.6,
@@ -462,7 +457,7 @@ function openEvent(id){
   $('#fStatus').value=e?.status||'draft';$('#fTicketStatus').value=e?.ticket_status||'coming_soon';
   $('#fFree').checked=!!e?.is_free;
   $('#fDesc').value=e?.description||'';$('#fTicket').value=e?.ticket_url||'';
-  editingPoster=e?.poster_url||null;$('#posterPreview').innerHTML=editingPoster?`<img src="${editingPoster}" style="width:130px;max-height:160px;object-fit:cover;margin-bottom:15px">`:'';
+  editingPoster=e?.poster_url||null;$('#posterPreview').innerHTML=editingPoster?`<img src="${editingPoster}" style="width:112px;aspect-ratio:9/16;object-fit:cover;border-radius:999px;margin-bottom:15px">`:'';
   editingPromo=e?.promo_video_url||null;$('#promoPreview').innerHTML=editingPromo?`<video src="${editingPromo}" style="width:180px;max-height:120px;object-fit:cover;margin-bottom:10px" muted controls preload="metadata"></video>`:'';
   $('#fPromoPublished').checked=!!e?.promo_published;
   renderTicketCatsBlock(e?.id||null);

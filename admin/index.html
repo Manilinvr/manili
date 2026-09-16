@@ -14,7 +14,7 @@
   <label class="check"><input type="checkbox" id="fFree"> Вход свободный (бесплатно) — скрывает билеты и статус на сайте</label>
   <label>Описание<textarea id="fDesc" rows="4"></textarea></label>
   <label>Ссылка на билеты (если категорий нет)<input id="fTicket" type="url"></label>
-  <label>Афиша<input id="fPoster" type="file" accept="image/*"></label><div id="posterPreview"></div>
+  <label>Афиша<input id="fPoster" type="file" accept="image/*"></label><p class="hint" style="margin:-6px 0 6px">Формат карусели на сайте — вертикальная капсула 9:16 (например, 1080×1920). Загружай постер в этих пропорциях, иначе фото обрежется по краям под форму карточки.</p><div id="posterPreview"></div>
   <label>Промо-видео<input id="fPromoVideo" type="file" accept="video/*"></label><p class="hint" style="margin:-6px 0 6px">Для лучшего качества на главной загружай видео в исходном разрешении (1080p+), MP4/H.264. Вертикальный формат (9:16) смотрится лучше всего. До 200 МБ.</p><div id="promoPreview"></div>
   <label class="check"><input type="checkbox" id="fPromoPublished"> показывать промо на главной</label>
   <button class="primary" type="submit">Сохранить</button><div id="formError" class="error"></div>
